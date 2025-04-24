@@ -1,103 +1,94 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import * as d3 from 'd3';
+import useCsvData from '@/hooks/useCsvData';
+import Plot from '@/components/Plot';
+import usePolygon from '@/hooks/usePolygon';
+import { PolygonSelection, DataPoint } from '@/types/types';
+import PolygonSelector from '@/components/PolygonToolButton';
+import SelectionControls from '@/components/SelectionsControl';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const data = useCsvData('/CD45_pos.csv') as DataPoint[];
+  const [selections, setSelections] = useState<PolygonSelection[]>([]);
+  console.log('selections', selections);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const width = 500,
+    height = 500;
+  const margin = { top: 10, right: 10, bottom: 40, left: 50 };
+
+  const xA = d3
+    .scaleLinear()
+    .domain([200, 1000])
+    .range([margin.left, width - margin.right]);
+  const yA = d3
+    .scaleLinear()
+    .domain([0, 1000])
+    .range([height - margin.bottom, margin.top]);
+  const xB = d3
+    .scaleLinear()
+    .domain([0, 1000])
+    .range([margin.left, width - margin.right]);
+  const yB = d3
+    .scaleLinear()
+    .domain([0, 1000])
+    .range([height - margin.bottom, margin.top]);
+
+  const { drawing, activePlot, isDrawingMode, setIsDrawingMode, handleClick } =
+    usePolygon({ data, xA, yA, xB, yB, setSelections, selections });
+
+  return (
+    <main className="min-h-screen max-w-[1280px] p-5 mx-auto flex flex-col">
+      <div className="w-full flex justify-between items-center mb-5">
+        <h1 className="text-3xl font-bold">Medical Cell Visualization</h1>
+        <PolygonSelector
+          isDrawingMode={isDrawingMode}
+          setIsDrawingMode={setIsDrawingMode}
+          text="Arbitrary Polygon"
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-10">
+        <div className="bg-white p-4 rounded-2xl shadow flex flex-col items-center">
+          <h2 className="text-xl font-semibold mb-2">Plot A</h2>
+          <Plot
+            data={data}
+            selections={selections}
+            drawing={drawing}
+            activePlot={activePlot}
+            plotId="A"
+            xScale={xA}
+            yScale={yA}
+            fieldX="CD45-KrO"
+            fieldY="SS INT LIN"
+            handleClick={handleClick}
+            isDrawingMode={isDrawingMode}
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div className="bg-white p-4 rounded-2xl shadow flex flex-col items-center">
+          <h2 className="text-xl font-semibold mb-2">Plot B</h2>
+          <Plot
+            data={data}
+            selections={selections}
+            drawing={drawing}
+            activePlot={activePlot}
+            plotId="B"
+            xScale={xB}
+            yScale={yB}
+            fieldX="CD19-PB"
+            fieldY="SS INT LIN"
+            handleClick={handleClick}
+            isDrawingMode={isDrawingMode}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <SelectionControls
+          selections={selections}
+          setSelections={setSelections}
+        />
+      </div>
+    </main>
   );
 }
