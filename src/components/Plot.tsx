@@ -189,12 +189,14 @@ const Plot = ({
   ]);
 
   return (
-    <svg
-      ref={plotRef}
-      width={500}
-      height={500}
-      className={`${isDrawingMode ? 'cursor-crosshair' : ''}`}
-    />
+    <div className="w-full max-w-[300px] sm:max-w-[500px] ">
+      <svg
+        ref={plotRef}
+        viewBox="0 0 500 500"
+        preserveAspectRatio="xMidYMid meet"
+        className={`w-full h-auto ${isDrawingMode ? 'cursor-crosshair' : ''}`}
+      />
+    </div>
   );
 };
 

@@ -48,8 +48,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen max-w-[1280px] p-5 mx-auto flex flex-col justify-center">
-      <div className="w-full flex justify-between items-center mb-5">
-        <h1 className="text-3xl font-bold">
+      <div className="w-full flex flex-col gap-4 md:flex-row md:gap-0 justify-between items-center mb-5">
+        <h1 className="text-xl md:text-3xl font-bold text-center">
           Medical Data Visualization & Analytics
         </h1>
         <PolygonToolButton
@@ -58,7 +58,7 @@ export default function Home() {
           text="Arbitrary Polygon"
         />
       </div>
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div className="bg-white p-4 rounded-2xl shadow flex flex-col items-center">
           <h2 className="text-xl font-semibold mb-2">Plot A</h2>
           <Plot
