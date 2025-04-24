@@ -9,9 +9,9 @@
 ## 使用技術
 
 - [Next.js](https://nextjs.org/) - React框架
-- [TypeScript](https://www.typescriptlang.org/) - 型別安全
-- [Tailwind CSS](https://tailwindcss.com/) - 樣式設計
-- [D3.js](https://d3js.org/) - 資料視覺化
+- [TypeScript](https://www.typescriptlang.org/) - 型別安全檢測
+- [Tailwind CSS](https://tailwindcss.com/) - RWD樣式設計
+- [D3.js](https://d3js.org/) - 資料視覺化與互動功能
 - [PapaParse](https://www.papaparse.com/) - CSV資料讀取
 - [Docker](https://www.docker.com/) - 容器化部署
 
@@ -87,6 +87,6 @@ app
  ┣ types            # TypeScript 型別定義
  ┣ page.tsx         # 主視覺頁面
 public/CD45_pos.csv # 原始數據
-Dockerfile
+dockerfile
 README.md
 ```
