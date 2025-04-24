@@ -5,14 +5,14 @@ import * as d3 from 'd3';
 import useCsvData from '@/hooks/useCsvData';
 import Plot from '@/components/Plot';
 import usePolygon from '@/hooks/usePolygon';
-import { PolygonSelection, DataPoint } from '@/types/types';
-import PolygonSelector from '@/components/PolygonToolButton';
+import { PolygonSelection } from '@/types/types';
+import PolygonToolButton from '@/components/PolygonToolButton';
 import SelectionControls from '@/components/SelectionsControl';
+import Loader from '@/components/Loader';
 
 export default function Home() {
-  const data = useCsvData('/CD45_pos.csv') as DataPoint[];
+  const { data, loading } = useCsvData('/CD45_pos.csv');
   const [selections, setSelections] = useState<PolygonSelection[]>([]);
-  console.log('selections', selections);
 
   const width = 500,
     height = 500;
@@ -38,11 +38,19 @@ export default function Home() {
   const { drawing, activePlot, isDrawingMode, setIsDrawingMode, handleClick } =
     usePolygon({ data, xA, yA, xB, yB, setSelections, selections });
 
+  if (loading) {
+    return (
+      <main className="min-h-screen flex justify-center items-center">
+        <Loader />
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen max-w-[1280px] p-5 mx-auto flex flex-col">
       <div className="w-full flex justify-between items-center mb-5">
         <h1 className="text-3xl font-bold">Medical Cell Visualization</h1>
-        <PolygonSelector
+        <PolygonToolButton
           isDrawingMode={isDrawingMode}
           setIsDrawingMode={setIsDrawingMode}
           text="Arbitrary Polygon"
@@ -82,7 +90,6 @@ export default function Home() {
           />
         </div>
       </div>
-
       <div className="mt-5">
         <SelectionControls
           selections={selections}
