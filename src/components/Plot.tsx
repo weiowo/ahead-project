@@ -16,6 +16,9 @@ interface PlotProps {
   isDrawingMode: boolean;
 }
 
+const sanitizeLabel = (label: string) =>
+  'label-' + btoa(label).replace(/[^a-zA-Z0-9]/g, '_');
+
 const Plot = ({
   data,
   selections,
@@ -31,7 +34,6 @@ const Plot = ({
 }: PlotProps) => {
   const plotRef = useRef<SVGSVGElement>(null);
 
-  // 計算放置標籤位置
   const calculatePolygonCentroid = (polygon: [number, number][]) => {
     if (polygon.length === 0) return [0, 0];
     const sumX = polygon.reduce((sum, [x]) => sum + x, 0);
@@ -62,7 +64,6 @@ const Plot = ({
     ) => {
       svg.selectAll('*').remove();
 
-      // 軸
       svg
         .append('g')
         .attr('transform', `translate(0,${height - margin.bottom})`)
@@ -73,7 +74,6 @@ const Plot = ({
         .attr('transform', `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale));
 
-      // 標籤
       svg
         .append('text')
         .attr('text-anchor', 'middle')
@@ -89,7 +89,6 @@ const Plot = ({
         .attr('y', margin.left - 35)
         .text('SS INT LIN');
 
-      // 繪圖容器
       const dotsContainer = svg.append('g');
 
       dotsContainer
@@ -102,7 +101,6 @@ const Plot = ({
         .attr('r', 1.5)
         .attr('fill', 'gray');
 
-      // 多邊形框與 label
       selections.forEach((sel) => {
         if (sel.visible === false) return;
 
@@ -135,12 +133,12 @@ const Plot = ({
 
       selections.forEach((sel) => {
         if (sel.visible === false) return;
-
+        const className = `selected-dots-${sanitizeLabel(sel.label)}`;
         dotsContainer
-          .selectAll(`.selected-dots-${sel.label}`)
+          .selectAll(`.${className}`)
           .data(data.filter((_, i) => sel.indices.includes(i)))
           .join('circle')
-          .attr('class', `selected-dots-${sel.label}`)
+          .attr('class', className)
           .attr('cx', (d) => xScale(d[fieldX]))
           .attr('cy', (d) => yScale(d[fieldY]))
           .attr('r', 1.5)

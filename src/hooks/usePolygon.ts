@@ -28,30 +28,40 @@ const usePolygon = ({
   const [activePlot, setActivePlot] = useState<PlotId>('A');
   const [isDrawingMode, setIsDrawingMode] = useState(false);
 
+  const validateLabel = (label: string, existing: string[]) => {
+    const sanitized = label.trim();
+    const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.]+$/.test(sanitized);
+    const isDuplicate = existing.includes(sanitized);
+    return isValid && !isDuplicate ? sanitized : null;
+  };
+
+  const askForLabel = useCallback((existing: string[]): string => {
+    while (true) {
+      const input = prompt('輸入標籤名稱 (如 CD45-, Gr, Mo, Ly):');
+      if (input === null) return `Group${existing.length + 1}`;
+
+      const valid = validateLabel(input, existing);
+      if (valid) return valid;
+
+      alert('請使用英文、數字組成且不可重複!');
+    }
+  }, []);
+
   const closePolygon = useCallback(() => {
     if (!drawing.length) return;
 
     const polygon = [...drawing, drawing[0]];
-
     const indices = data
       .map((d, i) => {
-        let px, py;
-
-        if (activePlot === 'A') {
-          px = xA(d['CD45-KrO']);
-          py = yA(d['SS INT LIN']);
-        } else {
-          px = xB(d['CD19-PB']);
-          py = yB(d['SS INT LIN']);
-        }
-
+        const px = activePlot === 'A' ? xA(d['CD45-KrO']) : xB(d['CD19-PB']);
+        const py =
+          activePlot === 'A' ? yA(d['SS INT LIN']) : yB(d['SS INT LIN']);
         return d3.polygonContains(polygon, [px, py]) ? i : -1;
       })
       .filter((i) => i !== -1);
 
-    const label =
-      prompt('輸入標籤名稱 (如 CD45-, Gr, Mo, Ly):') ||
-      `Group${selections?.length + 1}`;
+    const existingLabels = selections.map((s) => s.label);
+    const label = askForLabel(existingLabels);
 
     const polygonA = activePlot === 'A' ? polygon : [];
     const polygonB = activePlot === 'B' ? polygon : [];
@@ -79,7 +89,8 @@ const usePolygon = ({
     yB,
     activePlot,
     setSelections,
-    selections?.length,
+    selections,
+    askForLabel,
   ]);
 
   const handleClick = useCallback(
