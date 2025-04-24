@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Medical Cell Visualization',
-  description: 'Visualize and analyze medical cell data with interactive plots.',
+  title: 'Medical Data Visualization & Analytics',
+  description:
+    'Visualize and analyze medical cell data with interactive plots.',
 };
 
 export default function RootLayout({

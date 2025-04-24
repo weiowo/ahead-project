@@ -47,9 +47,11 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen max-w-[1280px] p-5 mx-auto flex flex-col">
+    <main className="min-h-screen max-w-[1280px] p-5 mx-auto flex flex-col justify-center">
       <div className="w-full flex justify-between items-center mb-5">
-        <h1 className="text-3xl font-bold">Medical Cell Visualization</h1>
+        <h1 className="text-3xl font-bold">
+          Medical Data Visualization & Analytics
+        </h1>
         <PolygonToolButton
           isDrawingMode={isDrawingMode}
           setIsDrawingMode={setIsDrawingMode}
