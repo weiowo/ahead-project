@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
-
-export interface CellData {
-  'CD45-KrO': number;
-  'CD19-PB': number;
-  'SS INT LIN': number;
-}
+import { DataPoint } from '@/types/types';
 
 export default function useCsvData(path: string) {
-  const [data, setData] = useState<CellData[]>([]);
+  const [data, setData] = useState<DataPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +13,7 @@ export default function useCsvData(path: string) {
       header: true,
       dynamicTyping: true,
       complete: (results) => {
-        setData(results.data as CellData[]);
+        setData(results.data as DataPoint[]);
         setLoading(false);
       },
     });
