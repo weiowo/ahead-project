@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import * as d3 from 'd3';
 import useCsvData from '@/hooks/useCsvData';
-import Plot from '@/components/Plot';
 import usePolygon from '@/hooks/usePolygon';
 import { PolygonSelection } from '@/types/types';
 import PolygonToolButton from '@/components/PolygonToolButton';
 import SelectionControls from '@/components/SelectionsControl';
 import Loader from '@/components/Loader';
+import CanvasPlot from '@/components/CanvasPlot';
 
 export default function Home() {
   const { data, loading } = useCsvData('/CD45_pos.csv');
@@ -58,10 +58,10 @@ export default function Home() {
           text="Arbitrary Polygon"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div className="bg-white p-4 rounded-2xl shadow flex flex-col items-center">
           <h2 className="text-xl font-semibold mb-2">Plot A</h2>
-          <Plot
+          <CanvasPlot
             data={data}
             selections={selections}
             drawing={drawing}
@@ -77,7 +77,7 @@ export default function Home() {
         </div>
         <div className="bg-white p-4 rounded-2xl shadow flex flex-col items-center">
           <h2 className="text-xl font-semibold mb-2">Plot B</h2>
-          <Plot
+          <CanvasPlot
             data={data}
             selections={selections}
             drawing={drawing}
