@@ -11,7 +11,7 @@
 - [Next.js](https://nextjs.org/) - React框架
 - [TypeScript](https://www.typescriptlang.org/) - 型別安全檢測
 - [Tailwind CSS](https://tailwindcss.com/) - RWD樣式設計
-- [D3.js](https://d3js.org/) - 資料視覺化與互動功能
+- [D3.js](https://d3js.org/) 與 [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) - 資料視覺化與互動功能
 - [PapaParse](https://www.papaparse.com/) - CSV資料讀取
 - [Docker](https://www.docker.com/) - 容器化部署
 
@@ -64,11 +64,11 @@ docker run -p 3000:3000 medical-visualization
 
       ![draw](./public/images/draw.png)
 
-    - 若要關閉多邊形，請點擊起點的位置。將出現一個提示，要求輸入群組標籤名稱。
+    - 若要關閉多邊形，請點擊起點的位置。將出現一個提示，要求輸入群組標籤名稱（例如 "CD45-", "Gr"、"Mo"、"Ly"），若未輸入則使用預設值。
 
       ![tag](./public/images/tag.png)
 
-    - 輸入群組名稱（例如 "CD45-", "Gr"、"Mo"、"Ly"），若未輸入則使用預設值。
+    - 繪製好的多邊形會顯示標籤，內部的點會上色，另一個圖表也會對應上色，且下方legend會加入該標籤。
 
       ![legend](./public/images/legend.png)
 
