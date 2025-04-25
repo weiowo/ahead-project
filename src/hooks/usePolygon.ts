@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import { DataPoint, PolygonSelection, PlotId } from '@/types/types';
 
@@ -13,7 +13,6 @@ interface UsePolygonProps {
 }
 
 const THRESHOLD = 10;
-const colors = d3.schemeCategory10;
 
 const usePolygon = ({
   data,
@@ -27,6 +26,15 @@ const usePolygon = ({
   const [drawing, setDrawing] = useState<[number, number][]>([]);
   const [activePlot, setActivePlot] = useState<PlotId>('A');
   const [isDrawingMode, setIsDrawingMode] = useState(false);
+
+  const colors = useMemo(() => {
+    return [
+      ...d3.schemeCategory10.filter((color) => color !== '#7f7f7f'),
+      ...d3.schemeTableau10,
+    ];
+  }, []);
+
+  console.log(d3.schemeCategory10);
 
   const validateLabel = (label: string, existing: string[]) => {
     const sanitized = label.trim();
@@ -91,6 +99,7 @@ const usePolygon = ({
     setSelections,
     selections,
     askForLabel,
+    colors
   ]);
 
   const handleClick = useCallback(
