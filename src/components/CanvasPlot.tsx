@@ -77,7 +77,6 @@ const CanvasPlot = ({
     const { width, height } = dimensions;
     ctx.clearRect(0, 0, width, height);
 
-    // 更新比例尺範圍以適應當前畫布尺寸
     const actualXScale = d3
       .scaleLinear()
       .domain(xScale.domain())
@@ -88,7 +87,6 @@ const CanvasPlot = ({
       .domain(yScale.domain())
       .range([height - margin.bottom, margin.top]);
 
-    // 畫座標軸
     ctx.strokeStyle = '#aaa';
     ctx.beginPath();
     ctx.moveTo(margin.left, margin.top);
@@ -99,7 +97,6 @@ const CanvasPlot = ({
     ctx.fillStyle = '#333';
     ctx.font = `${Math.max(10, width / 40)}px sans-serif`;
 
-    // X 軸刻度
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     const xTicks = actualXScale.ticks(5);
@@ -112,7 +109,6 @@ const CanvasPlot = ({
       ctx.fillText(tick.toString(), x, height - margin.bottom + 6);
     });
 
-    // Y 軸刻度
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
     const yTicks = actualYScale.ticks(5);
@@ -125,7 +121,6 @@ const CanvasPlot = ({
       ctx.fillText(tick.toString(), margin.left - 8, y);
     });
 
-    // Y 軸標籤
     ctx.save();
     ctx.translate(10, height / 2);
     ctx.rotate(-Math.PI / 2);
@@ -133,18 +128,15 @@ const CanvasPlot = ({
     ctx.fillText(fieldY.toString(), 0, 0);
     ctx.restore();
 
-    // X 軸標籤
     ctx.textAlign = 'center';
     ctx.fillText(fieldX.toString(), width / 2, height - 10);
 
-    // 找出所有已選取的點索引
     const selectedIndices = new Set(
       selections
         .filter((sel) => sel.visible !== false)
         .flatMap((sel) => sel.indices),
     );
 
-    // 畫未選取的點
     ctx.fillStyle = 'gray';
     data.forEach((d, i) => {
       if (selectedIndices.has(i)) return;
@@ -155,7 +147,6 @@ const CanvasPlot = ({
       ctx.fill();
     });
 
-    // 畫已選取的點
     selections.forEach((sel) => {
       if (sel.visible === false) return;
       ctx.fillStyle = sel.color;
@@ -169,20 +160,14 @@ const CanvasPlot = ({
       });
     });
 
-    // 轉換多邊形座標並繪製
     selections.forEach((sel) => {
       if (sel.visible === false) return;
 
       const polygonPoints = plotId === 'A' ? sel.polygonA : sel.polygonB;
       if (!polygonPoints || polygonPoints.length === 0) return;
 
-      // 假設 polygonPoints 儲存的是畫布座標
-      // 我們需要先將其轉換回數據座標，然後再轉換為目前畫布大小的畫布座標
-
       const currentPolygonPoints = polygonPoints.map(([x, y]) => {
-        // 假設 polygonPoints 中的座標是一個之前的畫布座標
-        // 先計算出相對位置（在 0-1 範圍內）
-        const prevWidth = 500; // 假設先前的畫布寬度
+        const prevWidth = 500;
         const prevHeight = 500;
         const prevXScale = d3
           .scaleLinear()
@@ -192,16 +177,11 @@ const CanvasPlot = ({
           .scaleLinear()
           .domain(yScale.domain())
           .range([prevHeight - margin.bottom, margin.top]);
-
-        // 將先前的畫布座標轉換為數據座標
         const dataX = prevXScale.invert(x);
         const dataY = prevYScale.invert(y);
-
-        // 然後將數據座標轉換為目前畫布的座標
         return [actualXScale(dataX), actualYScale(dataY)];
       });
 
-      // 使用轉換後的座標繪製多邊形
       ctx.strokeStyle = sel.color;
       ctx.lineWidth = Math.max(1, width / 250);
       ctx.beginPath();
@@ -215,7 +195,6 @@ const CanvasPlot = ({
       ctx.stroke();
     });
 
-    // 最後繪製標籤，確保它們顯示在最上層
     selections.forEach((sel) => {
       if (sel.visible === false) return;
 
@@ -240,17 +219,13 @@ const CanvasPlot = ({
         return [actualXScale(dataX), actualYScale(dataY)];
       });
 
-      // 計算標籤位置
       const cx =
         currentPolygonPoints.reduce((sum, p) => sum + p[0], 0) /
         currentPolygonPoints.length;
       const cy =
         currentPolygonPoints.reduce((sum, p) => sum + p[1], 0) /
         currentPolygonPoints.length;
-
-      // 繪製標籤 - 增加對比度和可見性
       ctx.font = `bold ${Math.max(12, width / 25)}px sans-serif`;
-      // 增加白色描邊寬度使標籤更明顯
       ctx.strokeStyle = 'white';
       ctx.lineWidth = Math.max(3, width / 120);
       ctx.strokeText(sel.label, cx, cy);
@@ -258,7 +233,6 @@ const CanvasPlot = ({
       ctx.fillText(sel.label, cx, cy);
     });
 
-    // 畫正在繪製的線條
     if (drawing.length > 1 && activePlot === plotId) {
       ctx.strokeStyle = 'black';
       ctx.setLineDash([4, 4]);
