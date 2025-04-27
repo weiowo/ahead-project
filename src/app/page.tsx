@@ -14,8 +14,8 @@ export default function Home() {
   const { data, loading } = useCsvData('/CD45_pos.csv');
   const [selections, setSelections] = useState<PolygonSelection[]>([]);
 
-  const width = 500,
-    height = 500;
+  const width = 450,
+    height = 450;
   const margin = { top: 10, right: 10, bottom: 40, left: 50 };
 
   const xA = d3
@@ -58,7 +58,7 @@ export default function Home() {
           text="Arbitrary Polygon"
         />
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:gap-10">
         <div className="bg-white p-4 rounded-2xl shadow flex flex-col items-center">
           <h2 className="text-xl font-semibold mb-2">Plot A</h2>
           <CanvasPlot

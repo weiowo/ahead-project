@@ -34,8 +34,6 @@ const usePolygon = ({
     ];
   }, []);
 
-  console.log(d3.schemeCategory10);
-
   const validateLabel = (label: string, existing: string[]) => {
     const sanitized = label.trim();
     const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.]+$/.test(sanitized);
@@ -99,7 +97,7 @@ const usePolygon = ({
     setSelections,
     selections,
     askForLabel,
-    colors
+    colors,
   ]);
 
   const handleClick = useCallback(

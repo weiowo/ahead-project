@@ -31,7 +31,7 @@ const CanvasPlot = ({
 }: CanvasPlotProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
+  const [dimensions, setDimensions] = useState({ width: 450, height: 450 });
 
   const margin = React.useMemo(
     () => ({ top: 10, right: 10, bottom: 40, left: 50 }),
@@ -57,7 +57,7 @@ const CanvasPlot = ({
     const updateDimensions = () => {
       if (containerRef.current) {
         const { width } = containerRef.current.getBoundingClientRect();
-        const newWidth = Math.min(width, 500);
+        const newWidth = Math.min(width, 450);
         const newHeight = newWidth;
         setDimensions({ width: newWidth, height: newHeight });
       }
@@ -167,8 +167,8 @@ const CanvasPlot = ({
       if (!polygonPoints || polygonPoints.length === 0) return;
 
       const currentPolygonPoints = polygonPoints.map(([x, y]) => {
-        const prevWidth = 500;
-        const prevHeight = 500;
+        const prevWidth = 450;
+        const prevHeight = 450;
         const prevXScale = d3
           .scaleLinear()
           .domain(xScale.domain())
@@ -202,8 +202,8 @@ const CanvasPlot = ({
       if (!polygonPoints || polygonPoints.length === 0) return;
 
       const currentPolygonPoints = polygonPoints.map(([x, y]) => {
-        const prevWidth = 500;
-        const prevHeight = 500;
+        const prevWidth = 450;
+        const prevHeight = 450;
         const prevXScale = d3
           .scaleLinear()
           .domain(xScale.domain())
@@ -291,7 +291,7 @@ const CanvasPlot = ({
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-[500px] mx-auto">
+    <div ref={containerRef} className="w-full max-w-[450px] mx-auto">
       <canvas
         ref={canvasRef}
         onClick={handleCanvasClick}
