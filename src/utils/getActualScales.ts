@@ -13,7 +13,13 @@ export const getActualScale = ({
   yScale: d3.ScaleLinear<number, number>;
   margin: { top: number; right: number; bottom: number; left: number };
 }) => {
-  const actualXScale = d3.scaleLinear().domain(xScale.domain()).range([margin.left, width - margin.right]);
-  const actualYScale = d3.scaleLinear().domain(yScale.domain()).range([height - margin.bottom, margin.top]);
+  const actualXScale = d3
+    .scaleLinear()
+    .domain(xScale.domain())
+    .range([margin.left, width - margin.right]);
+  const actualYScale = d3
+    .scaleLinear()
+    .domain(yScale.domain())
+    .range([height - margin.bottom, margin.top]);
   return { actualXScale, actualYScale };
 };

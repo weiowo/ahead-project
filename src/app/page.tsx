@@ -8,7 +8,7 @@ import { PolygonSelection } from '@/types/types';
 import SelectionControls from '@/components/PolygonPanel';
 import Loader from '@/components/Loader';
 import CanvasPlot from '@/components/CanvasPlot';
-import { Menu, X } from 'lucide-react'; 
+import { Menu, X } from 'lucide-react';
 
 export default function Home() {
   const { data, loading } = useCsvData('/CD45_pos.csv');
@@ -112,8 +112,8 @@ export default function Home() {
         } xl:hidden`}
       >
         <div className="p-4 border-b flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Polygon Panel</h2>
-            <X
+          <h2 className="text-lg font-semibold">Arbitrary Polygon Panel</h2>
+          <X
             size={28}
             onClick={() => setIsDrawerOpen(false)}
             className="text-sm cursor-pointer"

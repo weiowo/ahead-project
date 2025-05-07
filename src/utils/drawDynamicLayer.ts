@@ -42,7 +42,13 @@ export function drawDynamicLayer({
   ctx.clearRect(0, 0, width, height);
   ctx.drawImage(staticLayer, 0, 0, width, height);
 
-  const { actualXScale, actualYScale } = getActualScale({ width, height, xScale, yScale, margin });
+  const { actualXScale, actualYScale } = getActualScale({
+    width,
+    height,
+    xScale,
+    yScale,
+    margin,
+  });
 
   selections.forEach((sel) => {
     if (sel.visible === false) return;
@@ -60,8 +66,14 @@ export function drawDynamicLayer({
     const polygon = plotId === 'A' ? sel.polygonA : sel.polygonB;
     if (!polygon?.length) return;
 
-    const prevX = d3.scaleLinear().domain(xScale.domain()).range([margin.left, 450 - margin.right]);
-    const prevY = d3.scaleLinear().domain(yScale.domain()).range([450 - margin.bottom, margin.top]);
+    const prevX = d3
+      .scaleLinear()
+      .domain(xScale.domain())
+      .range([margin.left, 450 - margin.right]);
+    const prevY = d3
+      .scaleLinear()
+      .domain(yScale.domain())
+      .range([450 - margin.bottom, margin.top]);
     const scaled = polygon.map(([x, y]) => {
       const dataX = prevX.invert(x);
       const dataY = prevY.invert(y);

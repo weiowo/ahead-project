@@ -36,8 +36,12 @@ const CanvasPlot = ({
   const [dimensions, setDimensions] = useState({ width: 450, height: 450 });
   const staticLayerRef = useRef<HTMLCanvasElement | null>(null);
 
-  const ratio = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
-  const margin = React.useMemo(() => ({ top: 10, right: 10, bottom: 40, left: 50 }), []);
+  const ratio =
+    typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+  const margin = React.useMemo(
+    () => ({ top: 10, right: 10, bottom: 40, left: 50 }),
+    [],
+  );
 
   useEffect(() => {
     const resize = () => {
@@ -65,7 +69,17 @@ const CanvasPlot = ({
       fieldY,
       margin,
     });
-  }, [data, selections, dimensions, ratio, xScale, yScale, fieldX, fieldY, margin]);
+  }, [
+    data,
+    selections,
+    dimensions,
+    ratio,
+    xScale,
+    yScale,
+    fieldX,
+    fieldY,
+    margin,
+  ]);
 
   useEffect(() => {
     if (!canvasRef.current || !staticLayerRef.current) return;
@@ -86,7 +100,20 @@ const CanvasPlot = ({
       yScale,
       margin,
     });
-  }, [data, selections, drawing, activePlot, plotId, dimensions, ratio, xScale, yScale, fieldX, fieldY, margin]);
+  }, [
+    data,
+    selections,
+    drawing,
+    activePlot,
+    plotId,
+    dimensions,
+    ratio,
+    xScale,
+    yScale,
+    fieldX,
+    fieldY,
+    margin,
+  ]);
 
   const handleCanvasClick = (event: React.MouseEvent) => {
     if (!isDrawingMode) return;
@@ -105,7 +132,10 @@ const CanvasPlot = ({
         className={`${isDrawingMode ? 'cursor-crosshair' : ''} w-full h-auto rounded`}
         width={dimensions.width * ratio}
         height={dimensions.height * ratio}
-        style={{ width: `${dimensions.width}px`, height: `${dimensions.height}px` }}
+        style={{
+          width: `${dimensions.width}px`,
+          height: `${dimensions.height}px`,
+        }}
       />
     </div>
   );

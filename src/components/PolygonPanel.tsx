@@ -30,7 +30,7 @@ const PolygonPanel = ({
   };
 
   const deleteSelection = (index: number) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete?");
+    const confirmDelete = window.confirm('Are you sure you want to delete?');
     if (confirmDelete) {
       setSelections((prev) => prev.filter((_, idx) => idx !== index));
     }
@@ -39,10 +39,14 @@ const PolygonPanel = ({
   const confirmEdit = (idx: number) => {
     const trimmed = newLabel.trim();
     const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.\s]+$/.test(trimmed); // <-- added \s for spaces
-    const isDuplicate = selections.some((s, i) => s.label === trimmed && i !== idx);
+    const isDuplicate = selections.some(
+      (s, i) => s.label === trimmed && i !== idx,
+    );
 
     if (!isValid) {
-      alert('Label can only contain letters, numbers, hyphens, and underscores.');
+      alert(
+        'Label can only contain letters, numbers, hyphens, and underscores.',
+      );
     } else if (isDuplicate) {
       alert('Duplicate label name.');
     } else {
@@ -55,7 +59,10 @@ const PolygonPanel = ({
     }
   };
 
-  const handleLabelKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, idx: number) => {
+  const handleLabelKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    idx: number,
+  ) => {
     if (e.key === 'Enter') {
       confirmEdit(idx);
     } else if (e.key === 'Escape') {
@@ -66,7 +73,9 @@ const PolygonPanel = ({
   return (
     <div className="flex flex-col gap-2 p-2 rounded-lg max-w-full">
       <div className="flex flex-col items-left justify-between mb-2 gap-2">
-        <h3 className="text-lg font-semibold">Arbitrary Polygon Panel</h3>
+        <h3 className="hidden xl:block text-lg font-semibold">
+          Arbitrary Polygon Panel
+        </h3>
         <button
           className={`text-center px-4 py-1 rounded-full text-white cursor-pointer ${
             isDrawingMode ? 'bg-green-500' : 'bg-red-500'

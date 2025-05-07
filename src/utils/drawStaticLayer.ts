@@ -35,7 +35,13 @@ export function drawStaticLayer({
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   ctx.clearRect(0, 0, width, height);
 
-  const { actualXScale, actualYScale } = getActualScale({ width, height, xScale, yScale, margin });
+  const { actualXScale, actualYScale } = getActualScale({
+    width,
+    height,
+    xScale,
+    yScale,
+    margin,
+  });
 
   ctx.strokeStyle = '#aaa';
   ctx.beginPath();
@@ -80,7 +86,7 @@ export function drawStaticLayer({
   ctx.fillText(fieldX.toString(), width / 2, height - 10);
 
   const selectedIndices = new Set(
-    selections.flatMap((s) => (s.visible !== false ? s.indices : []))
+    selections.flatMap((s) => (s.visible !== false ? s.indices : [])),
   );
   ctx.fillStyle = 'gray';
   data.forEach((d, i) => {

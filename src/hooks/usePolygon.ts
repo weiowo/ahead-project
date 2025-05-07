@@ -43,13 +43,17 @@ const usePolygon = ({
 
   const askForLabel = useCallback((existing: string[]): string => {
     while (true) {
-      const input = prompt('Please enter label name (for example: CD45-, Gr, Mo, Ly):');
+      const input = prompt(
+        'Please enter label name (for example: CD45-, Gr, Mo, Ly):',
+      );
       if (input === null) return `Group${existing.length + 1}`;
 
       const valid = validateLabel(input, existing);
       if (valid) return valid;
 
-      alert('Label can only contain letters, numbers, hyphens, and should not duplicate.');
+      alert(
+        'Label can only contain letters, numbers, hyphens, and should not duplicate.',
+      );
     }
   }, []);
 
