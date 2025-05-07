@@ -35,21 +35,21 @@ const usePolygon = ({
   }, []);
 
   const validateLabel = (label: string, existing: string[]) => {
-    const sanitized = label.trim();
-    const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.]+$/.test(sanitized);
-    const isDuplicate = existing.includes(sanitized);
-    return isValid && !isDuplicate ? sanitized : null;
+    const trimmed = label.trim();
+    const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.\s]+$/.test(trimmed); // <-- added \s for spaces
+    const isDuplicate = existing.includes(trimmed);
+    return isValid && !isDuplicate ? trimmed : null;
   };
 
   const askForLabel = useCallback((existing: string[]): string => {
     while (true) {
-      const input = prompt('輸入標籤名稱 (如 CD45-, Gr, Mo, Ly):');
+      const input = prompt('Please enter label name (for example: CD45-, Gr, Mo, Ly):');
       if (input === null) return `Group${existing.length + 1}`;
 
       const valid = validateLabel(input, existing);
       if (valid) return valid;
 
-      alert('請使用英文、數字組成且不可重複!');
+      alert('Label can only contain letters, numbers, hyphens, and should not duplicate.');
     }
   }, []);
 
