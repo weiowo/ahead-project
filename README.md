@@ -56,11 +56,11 @@ docker run -p 3000:3000 medical-visualization
 2.  **視覺化數據：** 顯示兩個散佈圖，圖表 A（CD45-KrO vs. SS INT LIN）和圖表 B（CD19-PB vs. SS INT LIN）。
 3.  **定義細胞群體：**
 
-    - 點擊 **"Arbitrary Polygon"** 按鈕以開啟/關閉繪圖模式。
+    - 點擊 **"Add Arbitrary Polygon"** 按鈕以開啟繪圖模式。
 
       ![click](./public/images/click.png)
 
-    - 點擊圖表以開始繪製多邊形。
+    - 點擊圖表以開始繪製多邊形，若都繪製完了則點擊 **"Finish Drawing Polygon"**。
 
       ![draw](./public/images/draw.png)
 
@@ -68,13 +68,21 @@ docker run -p 3000:3000 medical-visualization
 
       ![tag](./public/images/tag.png)
 
-    - 繪製好的多邊形會顯示標籤，內部的點會上色，另一個圖表也會對應上色，且下方legend會加入該標籤。
+    - 繪製好的多邊形會顯示標籤，內部的點會上色，另一個圖表也會對應上色，且右方panel會加入該標籤。
 
-      ![legend](./public/images/legend.png)
+      ![panel](./public/images/panel.png)
 
 4.  **切換各群組可視性：** 點擊圖表下方的彩色標籤按鈕以切換所選細胞群體的可視性。
 
     ![toggle](./public/images/toggle.png)
+
+5.  **編輯與刪除標籤：** 點擊標籤旁的delete或edit按鈕，可刪除與編輯標籤名稱，左方圖表也會一併更新。
+
+    ![edit](./public/images/edit.png)
+
+6.  **響應式panel：** Panel在響應式設計可透過 menu button 收合至右方。
+
+    ![rwd](./public/images/rwd.png)
 
 ---
 
