@@ -78,13 +78,17 @@ export function drawStaticLayer({
   });
 
   ctx.save();
+  ctx.fillStyle = '#000';
+  ctx.font = `${Math.max(14, width / 30)}px sans-serif`;
   ctx.translate(10, height / 2);
   ctx.rotate(-Math.PI / 2);
   ctx.textAlign = 'center';
   ctx.fillText(fieldY.toString(), 0, 0);
   ctx.restore();
-  ctx.fillText(fieldX.toString(), width / 2, height - 10);
-
+  ctx.font = `${Math.max(14, width / 30)}px sans-serif`;
+  const xDomain = actualXScale.domain();
+  const xLabelPos = actualXScale((xDomain[0] + xDomain[1]) / 2) + 30;
+  ctx.fillText(fieldX.toString(), xLabelPos, height - 10);
   const selectedIndices = new Set(
     selections.flatMap((s) => (s.visible !== false ? s.indices : [])),
   );
