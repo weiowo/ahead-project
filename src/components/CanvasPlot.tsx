@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
-import { DataPoint, PolygonSelection, PlotId } from '@/types/types';
+import { DataPoint, PolygonSelection, PlotId } from '@/types';
 import { drawStaticLayer } from '@/utils/drawStaticLayer';
 import { drawDynamicLayer } from '@/utils/drawDynamicLayer';
+import cn from '@/utils/cn';
 
 interface CanvasPlotProps {
   data: DataPoint[];
@@ -129,7 +130,10 @@ const CanvasPlot = ({
         ref={canvasRef}
         onClick={handleCanvasClick}
         onContextMenu={(e) => e.preventDefault()}
-        className={`${isDrawingMode ? 'cursor-crosshair' : ''} w-full h-auto rounded`}
+        className={cn(
+          'w-full h-auto rounded',
+          isDrawingMode ? 'cursor-crosshair' : '',
+        )}
         width={dimensions.width * ratio}
         height={dimensions.height * ratio}
         style={{

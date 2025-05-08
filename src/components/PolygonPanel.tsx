@@ -1,6 +1,7 @@
 import React from 'react';
-import { PolygonSelection } from '@/types/types';
+import { PolygonSelection } from '@/types';
 import { Trash2, SquarePen, Check } from 'lucide-react';
+import cn from '@/utils/cn';
 
 interface PolygonPanelProps {
   selections: PolygonSelection[];
@@ -38,7 +39,7 @@ const PolygonPanel = ({
 
   const confirmEdit = (idx: number) => {
     const trimmed = newLabel.trim();
-    const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.\s]+$/.test(trimmed); // <-- added \s for spaces
+    const isValid = /^[a-zA-Z0-9\-\_\(\)\+\'\&\.\s]+$/.test(trimmed);
     const isDuplicate = selections.some(
       (s, i) => s.label === trimmed && i !== idx,
     );
@@ -77,9 +78,12 @@ const PolygonPanel = ({
           Arbitrary Polygon Panel
         </h3>
         <button
-          className={`text-center px-4 py-1 rounded-full text-white cursor-pointer ${
-            isDrawingMode ? 'bg-green-500' : 'bg-red-500'
-          }`}
+          className={cn(
+            'text-center px-4 py-1 rounded-full text-white cursor-pointer bg-gradient-to-r',
+            isDrawingMode
+              ? ' from-green-500 to-blue-600'
+              : ' from-orange-400 via-red-500 to-red-600',
+          )}
           onClick={() => setIsDrawingMode(!isDrawingMode)}
         >
           {isDrawingMode ? 'Finish Drawing Polygon' : 'Add Arbitrary Polygon'}
@@ -93,14 +97,17 @@ const PolygonPanel = ({
           return (
             <div
               key={idx}
-              className={`flex items-center w-full ${isVisible ? '' : 'opacity-40'}`}
+              className={cn(
+                'flex items-center w-full',
+                isVisible ? '' : 'opacity-40',
+              )}
             >
               <div className="flex items-center gap-2 flex-grow overflow-hidden">
                 <input
                   type="checkbox"
                   checked={isVisible}
                   onChange={() => toggleVisibility(idx)}
-                  className="w-4 h-4 ml-1 accent-red-600 cursor-pointer flex-shrink-0"
+                  className="w-4 h-4 ml-1 accent-[#B91C1C] cursor-pointer flex-shrink-0"
                 />
                 <div
                   className="w-3 h-3 rounded-full flex-shrink-0"

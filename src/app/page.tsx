@@ -4,11 +4,12 @@ import { useState } from 'react';
 import * as d3 from 'd3';
 import useCsvData from '@/hooks/useCsvData';
 import usePolygon from '@/hooks/usePolygon';
-import { PolygonSelection } from '@/types/types';
+import { PolygonSelection } from '@/types';
 import SelectionControls from '@/components/PolygonPanel';
 import Loader from '@/components/Loader';
 import CanvasPlot from '@/components/CanvasPlot';
 import { Menu, X } from 'lucide-react';
+import cn from '@/utils/cn';
 
 export default function Home() {
   const { data, loading } = useCsvData('/CD45_pos.csv');
@@ -107,9 +108,10 @@ export default function Home() {
         </div>
       </div>
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-lg z-50 transform transition-transform duration-300 ${
-          isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
-        } xl:hidden`}
+        className={cn(
+          'fixed top-0 right-0 h-full w-72 bg-white shadow-lg z-50 transform transition-transform duration-300 xl:hidden',
+          isDrawerOpen ? 'translate-x-0' : 'translate-x-full',
+        )}
       >
         <div className="p-4 border-b flex justify-between items-center">
           <h2 className="text-lg font-semibold">Arbitrary Polygon Panel</h2>
