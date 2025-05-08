@@ -91,8 +91,9 @@ docker run -p 3000:3000 medical-visualization
 ```
 app
  ┣ components       # Reusable UI 元件（如 Plot）
- ┣ hooks            # 自訂 hook（資料抓取、多邊形邏輯）
+ ┣ hooks            # 自訂 hook（資料抓取、多邊形邏輯等）
  ┣ types            # TypeScript 型別定義
+ ┣ utils            # 模組化功能（繪製初始多邊形、多邊形上色等）
  ┣ page.tsx         # 主視覺頁面
 public/CD45_pos.csv # 原始數據
 dockerfile
