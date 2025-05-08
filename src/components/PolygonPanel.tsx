@@ -85,69 +85,70 @@ const PolygonPanel = ({
           {isDrawingMode ? 'Finish Drawing Polygon' : 'Add Arbitrary Polygon'}
         </button>
       </div>
+      <div className="max-h-[420px] overflow-y-auto flex flex-col gap-2">
+        {selections.map((sel, idx) => {
+          const isVisible = sel.visible !== false;
+          const isEditing = editingIndex === idx;
 
-      {selections.map((sel, idx) => {
-        const isVisible = sel.visible !== false;
-        const isEditing = editingIndex === idx;
-
-        return (
-          <div
-            key={idx}
-            className={`flex items-center w-full ${isVisible ? '' : 'opacity-40'}`}
-          >
-            <div className="flex items-center gap-2 flex-grow overflow-hidden">
-              <input
-                type="checkbox"
-                checked={isVisible}
-                onChange={() => toggleVisibility(idx)}
-                className="w-4 h-4 ml-1 accent-red-600 cursor-pointer flex-shrink-0"
-              />
-              <div
-                className="w-3 h-3 rounded-full flex-shrink-0"
-                style={{ backgroundColor: sel.color }}
-              ></div>
-              {isEditing ? (
+          return (
+            <div
+              key={idx}
+              className={`flex items-center w-full ${isVisible ? '' : 'opacity-40'}`}
+            >
+              <div className="flex items-center gap-2 flex-grow overflow-hidden">
                 <input
-                  type="text"
-                  className="text-base border px-1 rounded w-full"
-                  value={newLabel}
-                  onChange={(e) => setNewLabel(e.target.value)}
-                  onKeyDown={(e) => handleLabelKeyDown(e, idx)}
-                  autoFocus
+                  type="checkbox"
+                  checked={isVisible}
+                  onChange={() => toggleVisibility(idx)}
+                  className="w-4 h-4 ml-1 accent-red-600 cursor-pointer flex-shrink-0"
                 />
-              ) : (
-                <span className="truncate text-base">{sel.label}</span>
-              )}
-            </div>
-            <div className="flex items-center ml-auto gap-1 mr-1">
-              <Trash2
-                size={22}
-                color="#202020"
-                onClick={() => deleteSelection(idx)}
-                className="cursor-pointer flex-shrink-0"
-              />
-              {isEditing ? (
-                <Check
-                  size={20}
+                <div
+                  className="w-3 h-3 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: sel.color }}
+                ></div>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    className="text-base border px-1 rounded w-full"
+                    value={newLabel}
+                    onChange={(e) => setNewLabel(e.target.value)}
+                    onKeyDown={(e) => handleLabelKeyDown(e, idx)}
+                    autoFocus
+                  />
+                ) : (
+                  <span className="truncate text-base">{sel.label}</span>
+                )}
+              </div>
+              <div className="flex items-center ml-auto gap-1 mr-1">
+                <Trash2
+                  size={22}
                   color="#202020"
-                  onClick={() => confirmEdit(idx)}
+                  onClick={() => deleteSelection(idx)}
                   className="cursor-pointer flex-shrink-0"
                 />
-              ) : (
-                <SquarePen
-                  size={20}
-                  color="#202020"
-                  onClick={() => {
-                    setEditingIndex(idx);
-                    setNewLabel(sel.label);
-                  }}
-                  className="cursor-pointer flex-shrink-0"
-                />
-              )}
+                {isEditing ? (
+                  <Check
+                    size={20}
+                    color="#202020"
+                    onClick={() => confirmEdit(idx)}
+                    className="cursor-pointer flex-shrink-0"
+                  />
+                ) : (
+                  <SquarePen
+                    size={20}
+                    color="#202020"
+                    onClick={() => {
+                      setEditingIndex(idx);
+                      setNewLabel(sel.label);
+                    }}
+                    className="cursor-pointer flex-shrink-0"
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
