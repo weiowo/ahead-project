@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
-import { DataPoint, PolygonSelection, PlotId } from '@/types/types';
+import { DataPoint, PolygonSelection, PlotId } from '@/types';
 
 interface UsePolygonProps {
   data: DataPoint[];

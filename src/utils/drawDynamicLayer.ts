@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { DataPoint, PolygonSelection, PlotId } from '@/types/types';
+import { DataPoint, PolygonSelection, PlotId } from '@/types';
 import { getActualScale } from './getActualScales';
 
 export function drawDynamicLayer({

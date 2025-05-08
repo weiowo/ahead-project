@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
-import { DataPoint } from '@/types/types';
+import { DataPoint } from '@/types';
 
 export default function useCsvData(path: string) {
   const [data, setData] = useState<DataPoint[]>([]);
